@@ -2,7 +2,6 @@ import sqlite3
 import urllib.request
 import ssl
 
-
 #connecting to the file or creating a file to store our database
 conn = sqlite3.connect("emailtable.sqlite")
 
