@@ -1,0 +1,2 @@
+To find the correct answer run this command: SELECT hex(name || age) AS X FROM Ages ORDER BY X
+answer: 417368613330
