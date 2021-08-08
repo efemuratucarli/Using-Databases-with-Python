@@ -1,5 +1,7 @@
 import sqlite3
 import xml.etree.ElementTree as ET
+
+#creating a new database
 conn = sqlite3.connect('tracksdatabase.sqlite')
 cur = conn.cursor()
 cur.executescript('''
@@ -63,7 +65,7 @@ for entry in all_data:
     if name is None or artist is None or album is None or genre is None :
         continue
 
-
+    # adding the name of the artist to the database. If it is already there, just ignore it
     cur.execute('''INSERT OR IGNORE INTO Artist (name)
         VALUES ( ? )''', ( artist, ) )
     cur.execute('SELECT id FROM Artist WHERE name = ? ', (artist, ))
@@ -84,6 +86,8 @@ for entry in all_data:
         VALUES ( ?, ?, ?, ?, ?, ?)''',
         ( name, album_id, genre_id, length, rating, count ) )
 
+#Committing the modified form of the database after the changes
+#to speed up the execution
 conn.commit()
 
 sqlstr = ''' SELECT Track.title, Artist.name, Album.title, Genre.name
@@ -95,4 +99,5 @@ sqlstr = ''' SELECT Track.title, Artist.name, Album.title, Genre.name
 for row in cur.execute(sqlstr):
     print(row)
 
+#closing the database
 cur.close()
